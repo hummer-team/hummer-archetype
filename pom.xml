@@ -12,6 +12,16 @@
         <module>hummer-archetype-rest</module>
     </modules>
 
+    <distributionManagement>
+        <repository>
+            <id>releases-local</id>
+            <url>http://localhost:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots-local</id>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <extensions>
