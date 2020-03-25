@@ -1,0 +1,122 @@
+CREATE TABLE `message_in` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	`platform_name` VARCHAR(50) NOT NULL DEFAULT '0' COMMENT '平台代码' COLLATE 'utf8mb4_unicode_ci',
+	`plateform_user_id` VARCHAR(500) NULL DEFAULT NULL COMMENT '外部平台用户标志' COLLATE 'utf8mb4_unicode_ci',
+	`plateform_user_name` VARCHAR(100) NULL DEFAULT NULL COMMENT '外部平台用户名' COLLATE 'utf8mb4_unicode_ci',
+	`messasge_id` VARCHAR(100) NULL DEFAULT NULL COMMENT '外部平台消息ID' COLLATE 'utf8mb4_unicode_ci',
+	`message_type` VARCHAR(100) NULL DEFAULT NULL COMMENT '消息类型' COLLATE 'utf8mb4_unicode_ci',
+	`message_body` JSON NULL DEFAULT NULL COMMENT '消息内容',
+	`sign` VARCHAR(2000) NULL DEFAULT NULL COMMENT '签名' COLLATE 'utf8mb4_unicode_ci',
+	`secret_key` VARCHAR(2000) NULL DEFAULT NULL COMMENT '秘钥' COLLATE 'utf8mb4_unicode_ci',
+	`create_datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`inner_service_http_api` VARCHAR(1000) NULL DEFAULT NULL COMMENT '转发内部API地址' COLLATE 'utf8mb4_unicode_ci',
+	`inner_service_resp_code` INT(11) NULL DEFAULT NULL COMMENT '内部API响应代码',
+	`inner_service_resp_message` TEXT NULL COMMENT '内部API响应消息' COLLATE 'utf8mb4_unicode_ci',
+	PRIMARY KEY (`id`),
+	INDEX `platform_code_create_datetime` (`create_datetime`, `platform_name`)
+)
+COMMENT='外部平台请求消息'
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `message_out` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`inner_service_name` VARCHAR(50) NOT NULL COMMENT '内部服务名称' COLLATE 'utf8mb4_unicode_ci',
+	`inner_service_api` VARCHAR(200) NOT NULL COMMENT '内部服务接口名称' COLLATE 'utf8mb4_unicode_ci',
+	`message_id` VARCHAR(100) NOT NULL COMMENT '消息id' COLLATE 'utf8mb4_unicode_ci',
+	`message_type` VARCHAR(50) NULL DEFAULT NULL COMMENT '消息类型' COLLATE 'utf8mb4_unicode_ci',
+	`platform_name` VARCHAR(200) NULL DEFAULT NULL COMMENT '外部平台名称' COLLATE 'utf8mb4_unicode_ci',
+	`platform_http_api` VARCHAR(200) NULL DEFAULT NULL COMMENT '外部平台api名称' COLLATE 'utf8mb4_unicode_ci',
+	`platform_http_method` VARCHAR(10) NULL DEFAULT NULL COMMENT '外部平台apiHttpMethod' COLLATE 'utf8mb4_unicode_ci',
+	`platform_response_code` INT(11) NULL DEFAULT NULL COMMENT '外部平台响应CODE',
+	`platform_response_message` VARCHAR(50) NULL DEFAULT NULL COMMENT '外部平台响应消息' COLLATE 'utf8mb4_unicode_ci',
+	`platform_response_cost_time` BIGINT(20) NULL DEFAULT NULL COMMENT '外部平台请求耗时',
+	`create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	INDEX `create_time` (`create_time`, `message_id`)
+)
+COMMENT='发送给外部平台的消息'
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `message_rule` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	`platform_name` VARCHAR(50) NOT NULL DEFAULT '0' COMMENT '平台名称' COLLATE 'utf8mb4_unicode_ci',
+	`message_type` VARCHAR(100) NOT NULL DEFAULT '0' COMMENT '消息类型，如：创建订单' COLLATE 'utf8mb4_unicode_ci',
+	`target_http_api` VARCHAR(200) NOT NULL DEFAULT '0' COMMENT '内部平台http接口名称' COLLATE 'utf8mb4_unicode_ci',
+	`target_http_method` VARCHAR(10) NULL DEFAULT '0' COMMENT '内部平台httpMethod' COLLATE 'utf8mb4_unicode_ci',
+	`call_target_timeout_millisecond` INT(11) NULL DEFAULT '3000' COMMENT '调用target time out 超时时间毫秒',
+	`message_route_type` BIT(1) NULL DEFAULT b'0' COMMENT '消息路由规则类型0：入站，1：出站',
+	`in_message_response_snapshot_data` BIT(1) NOT NULL DEFAULT b'0' COMMENT '入站消息返回快照数据',
+	`secret_key_activate_begin_time` DATETIME NULL DEFAULT NULL COMMENT '生效开始时间',
+	`secret_key_expired_time` DATETIME NULL DEFAULT NULL COMMENT '失效时间',
+	`secret_key` VARCHAR(100) NULL DEFAULT NULL COMMENT '私钥' COLLATE 'utf8mb4_unicode_ci',
+	`ticket_impl_service` VARCHAR(100) NULL DEFAULT NULL COMMENT '签名加密解密驱动类型' COLLATE 'utf8mb4_unicode_ci',
+	`ticket_field_map` JSON NULL DEFAULT NULL COMMENT '签名包含的字段',
+	`ticket_expired_time_minute` INT(11) NULL DEFAULT '1' COMMENT '签名过期时间',
+	`private_key` VARCHAR(1024) NULL DEFAULT NULL COMMENT '私钥' COLLATE 'utf8mb4_unicode_ci',
+	`public_key` VARCHAR(512) NULL DEFAULT NULL COMMENT '公钥' COLLATE 'utf8mb4_unicode_ci',
+	`is_pre_created` BIT(1) NULL DEFAULT NULL COMMENT '是否是预先生成票据,如果是则入站消息需要从DB获取票据并校验',
+	`route_impl_service` VARCHAR(200) NULL DEFAULT NULL COMMENT '转发路由规则service' COLLATE 'utf8mb4_unicode_ci',
+	`create_user_id` INT(11) NOT NULL COMMENT '创建人',
+	`last_modified_user_id` INT(11) NULL DEFAULT NULL COMMENT '修改人',
+	`create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`last_modified_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改',
+	`is_deleted` BIT(1) NULL DEFAULT b'0' COMMENT '是否逻辑删除0：未删除，有效；1：删除，无效',
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `platform_name_message_type_message_route_type` (`platform_name`, `message_type`, `message_route_type`)
+)
+COMMENT='消息规则'
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=4
+;
+
+CREATE TABLE `ticket_record` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`is_precreated` BIT(1) NOT NULL DEFAULT b'1' COMMENT '是否是预先创建',
+	`ticket_md5` VARCHAR(32) NULL DEFAULT NULL COMMENT '票据md5' COLLATE 'utf8mb4_unicode_ci',
+	`platform_name` VARCHAR(500) NULL DEFAULT NULL COMMENT '平台名称' COLLATE 'utf8mb4_unicode_ci',
+	`message_type` VARCHAR(50) NULL DEFAULT NULL COMMENT '消息类型' COLLATE 'utf8mb4_unicode_ci',
+	`message_id` VARCHAR(500) NULL DEFAULT NULL COMMENT '消息id' COLLATE 'utf8mb4_unicode_ci',
+	`ticket_value` VARCHAR(3000) NULL DEFAULT NULL COMMENT '签名结果' COLLATE 'utf8mb4_unicode_ci',
+	`ticket_type` VARCHAR(100) NULL DEFAULT NULL COMMENT '签名类型' COLLATE 'utf8mb4_unicode_ci',
+	`created_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '签名创建时间',
+	`expired_date` INT(11) NULL DEFAULT NULL COMMENT '过期相对时间',
+	`verified_date` DATETIME NULL DEFAULT NULL,
+	`verified_status` INT(11) NOT NULL DEFAULT '0',
+	`is_delete` BIT(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
+	`data_body` JSON NULL DEFAULT NULL COMMENT '关联的数据包',
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `platform_name_message_id` (`platform_name`, `message_id`(100)),
+	INDEX `ticket_md5` (`ticket_md5`)
+)
+COMMENT='消息签名'
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=14
+;
+
+CREATE TABLE `ticket_verified_record` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`platform_name` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`message_type` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`message_id` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`secret_key` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`ticket_value` VARCHAR(3000) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`ticket_type` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`verified_status` INT(11) NULL DEFAULT NULL,
+	`verified_describe` TEXT NULL COLLATE 'utf8mb4_unicode_ci',
+	`verified_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+)
+COMMENT='消息票据验证结果'
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=63
+;
+
