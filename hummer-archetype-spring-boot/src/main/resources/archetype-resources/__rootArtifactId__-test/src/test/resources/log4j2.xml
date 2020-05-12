@@ -3,7 +3,7 @@
 <configuration status="OFF" monitorInterval="1800" packages="org.apache.logging.log4j.core">
     <properties>
         <property name="LOG_PATH">/var</property>
-        <property name="project_name">delivery-channel.service.panli.com</property>
+        <property name="project_name">${rootArtifactId}</property>
         <Property name="PID">????</Property>
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>
@@ -19,7 +19,7 @@
 
         <RollingRandomAccessFile name="LogstashFile"
                                  fileName="${LOG_PATH}/logs/${project_name}/logstash.log"
-                                 filePattern="${LOG_PATH}/logs/${project_name}/logstash/%d{yyyy-MM-dd}_logstash.log">
+                                 filePattern="${LOG_PATH}/logs/${project_name}/%d{yyyy-MM-dd}_logstash.log">
             <PatternLayout pattern="${FILE_LOG_PATTERN}" />
             <Policies>
                 <TimeBasedTriggeringPolicy interval="6" modulate="true"/>

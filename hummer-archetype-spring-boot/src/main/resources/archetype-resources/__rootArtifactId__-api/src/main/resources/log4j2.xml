@@ -18,8 +18,8 @@
 		</Console>
 
 		<RollingRandomAccessFile name="LogstashFile"
-								 fileName="${LOG_PATH}/logs/${project_name}/logstash/logstash.log"
-								 filePattern="${LOG_PATH}/logs/${project_name}/logstash/%d{yyyy-MM-dd}_logstash.log">
+								 fileName="${LOG_PATH}/logs/${project_name}/logstash.log"
+								 filePattern="${LOG_PATH}/logs/${project_name}/%d{yyyy-MM-dd}_logstash.log">
 			<PatternLayout pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
