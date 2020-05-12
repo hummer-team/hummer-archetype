@@ -36,7 +36,7 @@ public class SimpleController {
     @ApiOperation(value = "this is save batch info to db demo")
     public ResourceResponse save(@RequestBody @Valid SimpleDemoSaveReqDto reqDto
             , Errors errors) {
-        ParameterAssertUtil.assertRequestFristValidated(errors);
+        ParameterAssertUtil.assertRequestFirstValidated(errors);
         simpleDemoFacade.save(reqDto);
         return ResourceResponse.ok();
     }
