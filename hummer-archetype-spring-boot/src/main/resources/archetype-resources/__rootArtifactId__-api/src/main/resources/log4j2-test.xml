@@ -11,14 +11,9 @@
 		<Property name="LOG_LEVEL_PATTERN">%5p</Property>
 		<Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
 		<Property name="LOG_DATE_TIME_ZONE">GMT+8</Property>
-		<Property name="CONSOLE_LOG_PATTERN">%clr{%date{${LOG_DATEFORMAT_PATTERN}}{${LOG_DATE_TIME_ZONE}}}{faint}
-			%clr{${LOG_LEVEL_PATTERN}}
-			[%X{requestId}] [%X{serverIp}] %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint}
-			%m%n${LOG_EXCEPTION_CONVERSION_WORD}
+		<Property name="CONSOLE_LOG_PATTERN">%clr{%date{${LOG_DATEFORMAT_PATTERN}}{${LOG_DATE_TIME_ZONE}}}{faint} %clr{${LOG_LEVEL_PATTERN}} [%X{requestId}] [%X{serverIp}] %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD}
 		</Property>
-		<Property name="FILE_LOG_PATTERN">%date{${LOG_DATEFORMAT_PATTERN}}{${LOG_DATE_TIME_ZONE}} ${LOG_LEVEL_PATTERN}
-			[%X{requestId}]
-			[%X{serverIp}] [%t] %-40.40c{1.} : %m%n${LOG_EXCEPTION_CONVERSION_WORD}
+		<Property name="FILE_LOG_PATTERN">%date{${LOG_DATEFORMAT_PATTERN}}{${LOG_DATE_TIME_ZONE}} ${LOG_LEVEL_PATTERN} [%X{requestId}] [%X{serverIp}] [%t] %-40.40c{1.} : %m%n${LOG_EXCEPTION_CONVERSION_WORD}
 		</Property>
 		<Property name="splitSize">100 MB</Property>
 	</properties>
