@@ -49,22 +49,8 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <unit-tests.skip>false</unit-tests.skip>
         <integration-tests.skip>false</integration-tests.skip>
-        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
-        <project.artifact.name>${project.artifactId}</project.artifact.name>
-        <build.number>LOCAL</build.number>
         <unit-tests.skip>false</unit-tests.skip>
         <integration-tests.skip>false</integration-tests.skip>
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.reportPaths>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPaths>
-        <sonar.language>java</sonar.language>
-        <sonar.exclusions>
-            **/domain/*
-        </sonar.exclusions>
-        <surefire.forkNumber>0</surefire.forkNumber>
-        <jacoco.dataFile>${project.basedir}/../target/jacoco.exec</jacoco.dataFile>
-        <jacoco.reporting.outputDirectory>${project.basedir}/../target/reports/jacoco</jacoco.reporting.outputDirectory>
-        <jacoco.inclNoLocationClasses>true</jacoco.inclNoLocationClasses>
         <hummer.version>1.0.0-SNAPSHOT</hummer.version>
         <business.version>${version}</business.version>
     </properties>

@@ -127,4 +127,11 @@
             </fileSets>
         </module>
 	</modules>
+	<fileSets>
+		<fileSet filtered="true" encoding="UTF-8">
+			<directory></directory>
+			<includes>.gitignore</includes>
+			<includes>README.md</includes>
+		</fileSet>
+	</fileSets>
 </archetype-descriptor>
