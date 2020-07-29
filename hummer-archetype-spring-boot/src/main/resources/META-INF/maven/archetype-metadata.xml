@@ -130,8 +130,10 @@
 	<fileSets>
 		<fileSet filtered="true" encoding="UTF-8">
 			<directory></directory>
-			<includes>.gitignore</includes>
-			<includes>README.md</includes>
+			<includes>
+				<include>.gitignore</include>
+				<include>README.md</include>
+			</includes>
 		</fileSet>
 	</fileSets>
 </archetype-descriptor>
