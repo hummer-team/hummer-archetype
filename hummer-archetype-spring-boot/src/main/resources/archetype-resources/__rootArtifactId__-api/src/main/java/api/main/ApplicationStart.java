@@ -10,7 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 * application enter
 * @author liguo
 **/
-@SpringBootApplication(scanBasePackages = "${package}")
+@SpringBootApplication(scanBasePackages = "${package}",exclude = {DataSourceAutoConfiguration.class})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @UndertowServer
 public class ApplicationStart {
