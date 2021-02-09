@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+	name="${rootArtifactId}"
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modules>
+	       <module id="${rootArtifactId}-api" dir="__rootArtifactId__-api"
+            name="${rootArtifactId}-api">
+            <fileSets>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+                </fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/assembly</directory>
+					<includes>
+						<include>**/*.xml</include>
+					</includes>
+				</fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.xml</include>
+                        <include>**/*.txt</include>
+                        <include>**/*.properties</include>
+						<include>**/*.ymal</include>
+                    </includes>
+                    <excludes>
+                        <exclude>mapper/*.xml</exclude>
+                    </excludes>
+                </fileSet>
+                <fileSet filtered="false" encoding="UTF-8">
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>mapper/*.xml</include>
+                    </includes>
+                </fileSet>
+				<fileSet filtered="false" encoding="UTF-8">
+					<directory>src/main/resources/META-INF/services</directory>
+					<includes>
+						<include>**/*.*</include>
+					</includes>
+				</fileSet>
+            </fileSets>
+        </module>
+		   <module id="${rootArtifactId}-domain" dir="__rootArtifactId__-domain"
+			name="${rootArtifactId}-domain">
+			<fileSets>
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.xml</include>
+						<include>**/*.txt</include>
+						<include>**/*.properties</include>
+					</includes>
+					<excludes>
+						<exclude>mapper/*.xml</exclude>
+					</excludes>
+				</fileSet>
+
+			</fileSets>
+		</module>
+		   <module id="${rootArtifactId}-dao" dir="__rootArtifactId__-dao"
+			name="${rootArtifactId}-dao">
+			<fileSets>
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="true" encoding="UTF-8">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+					</includes>
+				</fileSet>
+				<fileSet filtered="false" encoding="UTF-8">
+					<directory>src/main/resources</directory>
+					<includes>
+						<include>mapper/*.xml</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+		</module>
+		   <module id="${rootArtifactId}-facade" dir="__rootArtifactId__-facade"
+			name="${rootArtifactId}-facade">
+			<fileSets>
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+		</module>
+		<module id="${rootArtifactId}-config" dir="__rootArtifactId__-config"
+				name="${rootArtifactId}-config">
+			<fileSets>
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+		</module>
+ 		   <module id="${rootArtifactId}-support" dir="__rootArtifactId__-support" name="${rootArtifactId}-support">
+ 			<fileSets>
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
+					<directory>src/main/java</directory>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</fileSet>
+			</fileSets>
+ 		</module>
+		   <module id="${rootArtifactId}-integration" dir="__rootArtifactId__-integration" name="${rootArtifactId}-integration"/>
+		   <module id="${rootArtifactId}-test" dir="__rootArtifactId__-test" name="${rootArtifactId}-test">
+            <fileSets>
+                <fileSet filtered="true" packaged="true" encoding="UTF-8">
+                    <directory>src/test/java</directory>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                </fileSet>
+                <fileSet filtered="true" encoding="UTF-8">
+                    <directory>src/test/resources</directory>
+                    <includes>
+                        <include>**/*.xml</include>
+                        <include>**/*.txt</include>
+                        <include>**/*.properties</include>
+                    </includes>
+                </fileSet>
+            </fileSets>
+        </module>
+	</modules>
+	<fileSets>
+		<fileSet filtered="true" encoding="UTF-8">
+			<directory></directory>
+			<includes>
+				<include>.gitignore</include>
+				<include>README.md</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

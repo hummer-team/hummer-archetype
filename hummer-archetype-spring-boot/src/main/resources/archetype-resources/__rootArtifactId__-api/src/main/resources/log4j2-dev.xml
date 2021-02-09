@@ -4,6 +4,8 @@
 	<properties>
 		<property name="LOG_PATH">/var</property>
 		<property name="project_name">${rootArtifactId}</property>
+		<!--<property name="pattern">[%level] [%date{ISO8601}] [%logger] [%thread] [] [%X{requestId}] [%X{serverIp}] %msg%n</property>-->
+		<Property name="splitSize">100 MB</Property>
 		<Property name="PID">????</Property>
 		<Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
 		<Property name="LOG_LEVEL_PATTERN">%5p</Property>
@@ -29,7 +31,7 @@
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
 			</Policies>
 			<Filters>
-				<ThresholdFilter level="info" onMatch="ACCEPT"
+				<ThresholdFilter level="debug" onMatch="ACCEPT"
 								 onMismatch="DENY" />
 			</Filters>
 			<DefaultRolloverStrategy max="50"/>
@@ -93,10 +95,12 @@
 		<Logger name="com.alibaba.dubbo" level="error" />
 		<Logger name="org.mybatis" level="debug" />
 		<Logger name="org.apache" level="error" />
-		<Logger name="io.undertow" level="error"/>
+		<Logger name="io.undertow" level="info"/>
 		<Logger name="springfox.documentation" level="error" />
-		<Root level="info">
+		<Root level="debug">
+			<appender-ref ref="Console" />
 			<appender-ref ref="LogstashFile" />
+			<appender-ref ref="RollingErrorFile" />
 		</Root>
 	</loggers>
 

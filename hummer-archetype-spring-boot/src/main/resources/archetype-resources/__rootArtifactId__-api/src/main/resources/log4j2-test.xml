@@ -25,7 +25,7 @@
 		<RollingRandomAccessFile name="LogstashFile"
 								 fileName="${LOG_PATH}/logs/${project_name}/logstash.log"
 								 filePattern="${LOG_PATH}/logs/${project_name}/%d{yyyy-MM-dd}_logstash.log">
-			<PatternLayout pattern="${FILE_LOG_PATTERN}" />
+			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
@@ -39,7 +39,7 @@
 
 		<RollingRandomAccessFile name="RollingInfoFile"
 								 fileName="${LOG_PATH}/logs/${project_name}/info.log" filePattern="${LOG_PATH}/logs/${project_name}/info_%d{yyyy-MM-dd}.log">
-			<PatternLayout pattern="${FILE_LOG_PATTERN}" />
+			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
@@ -55,7 +55,7 @@
 
 		<RollingRandomAccessFile name="RollingErrorFile"
 								 fileName="${LOG_PATH}/logs/${project_name}/error.log" filePattern="${LOG_PATH}/logs/${project_name}/error_%d{yyyy-MM-dd}.log">
-			<PatternLayout pattern="${FILE_LOG_PATTERN}" />
+			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
@@ -70,7 +70,7 @@
 		<RollingRandomAccessFile name="RollingDebugFile"
 								 fileName="${LOG_PATH}/logs/${project_name}/debug.log"
 								 filePattern="${LOG_PATH}/logs/${project_name}/debug_%d{yyyy-MM-dd}.log">
-			<PatternLayout pattern="${FILE_LOG_PATTERN}" />
+			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
@@ -98,7 +98,6 @@
 		<Logger name="io.undertow" level="info"/>
 		<Logger name="springfox.documentation" level="error" />
 		<Root level="debug">
-			<appender-ref ref="Console" />
 			<appender-ref ref="LogstashFile" />
 			<appender-ref ref="RollingErrorFile" />
 		</Root>
