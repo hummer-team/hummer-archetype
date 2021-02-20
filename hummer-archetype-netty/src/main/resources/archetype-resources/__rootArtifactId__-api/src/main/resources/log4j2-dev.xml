@@ -92,7 +92,7 @@
 		<logger name="io.netty.resolver.dns" level="error" additivity="false"/>
 
 		<Root level="debug" additivity="false">
-<!--			<appender-ref ref="Console" />-->
+			<appender-ref ref="Console" />
 			<appender-ref ref="LogstashFile" />
 			<appender-ref ref="RollingErrorFile" />
 		</Root>

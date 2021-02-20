@@ -3,8 +3,9 @@ package ${package}.api.main;
 import io.elves.core.ElvesBootStart;
 import io.elves.http.server.HttpServer;
 
+@ElvesApplication(scanPackage = "${package}", bootServer = HttpServer.class)
 public class ApplicationStart {
     public static void main(String[] args){
-        ElvesBootStart.run(HttpServer.class, args);
+        ElvesBootStart.run(ApplicationStart.class, args);
     }
 }

@@ -21,9 +21,5 @@
             <groupId>${groupId}</groupId>
             <artifactId>${rootArtifactId}-support</artifactId>
         </dependency>
-        <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>${rootArtifactId}-domain</artifactId>
-        </dependency>
     </dependencies>
 </project>

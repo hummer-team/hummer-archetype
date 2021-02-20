@@ -25,5 +25,9 @@
             <groupId>${groupId}</groupId>
             <artifactId>${rootArtifactId}-config</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>${rootArtifactId}-facade</artifactId>
+        </dependency>
     </dependencies>
 </project>

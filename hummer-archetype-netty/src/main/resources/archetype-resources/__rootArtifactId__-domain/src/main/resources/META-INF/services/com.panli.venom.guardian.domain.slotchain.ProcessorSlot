@@ -1,4 +1,0 @@
-${package}.domain.slots.sys.SystemSlot
-${package}.domain.slots.blacklist.BlacklistSlot
-${package}.domain.slots.whitelist.WhitelistSlot
-${package}.domain.slots.flow.SimpleFlowSlot
