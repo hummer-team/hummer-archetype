@@ -1,7 +1,7 @@
 package ${package}.api.command;
 
 import ${package}.domain.event.handler.DomainEventHandler;
-import ${package}.rule.listener.ListenerConfig;
+import ${package}.config.listener.ListenerConfig;
 import ${package}.support.eventbus.MemoryEventBus;
 import io.elves.core.scope.ElvesScopeAction;
 import io.elves.core.scope.ElvesScopeApplicationContext;

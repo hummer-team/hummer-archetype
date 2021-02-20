@@ -1,5 +1,6 @@
 package ${package}.api.main;
 
+import io.elves.core.ElvesApplication;
 import io.elves.core.ElvesBootStart;
 import io.elves.http.server.HttpServer;
 

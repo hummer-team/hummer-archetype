@@ -13,10 +13,7 @@
     <version>${version}</version>
     <packaging>pom</packaging>
     <name>${rootArtifactId}</name>
-    <url>http://maven.apache.org</url>
     <modelVersion>4.0.0</modelVersion>
-
-
     <description>${rootArtifactId} project for netty</description>
     <url>https://github.com/hummer-team/elves</url>
 
