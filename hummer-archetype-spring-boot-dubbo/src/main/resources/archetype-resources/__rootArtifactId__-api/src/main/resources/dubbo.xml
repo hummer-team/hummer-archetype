@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+    <!--this dubbo provide service config,see https://dubbo.apache.org/zh/docs/v2.7/user/references/xml/-->
+    <dubbo:application name="${rootArtifactId}-provider" metadata-type="remote" version="${version}">
+        <dubbo:parameter key="mapping-type" value="metadata"/>
+    </dubbo:application>
+
+    <!--dubbo metrics default disabled-->
+    <!--<dubbo:metrics port="8006" protocol="dubbo"/>-->
+    <!--dubbo monitor default disabled-->
+    <!--<dubbo:monitor protocol="registry" interval="3000"/>-->
+
+    <dubbo:config-center address="nacos://config-center.service.panli.com:80?namespace=dubbo_config"/>
+    <dubbo:metadata-report address="nacos://config-center.service.panli.com:80?namespace=dubbo_config"/>
+    <dubbo:protocol name="dubbo" port="20000"/>
+    <dubbo:registry address="nacos://config-center.service.panli.com:80?namespace=dubbo_config"/>
+
+    <!--dubbo:reference service consumers-->
+    <!--<dubbo:reference id="helloService" timeout="1000" retries="1" group="g1" version="1.0.0"
+                     interface="com.dubbo.template.facade.SimpleDemoFacade"/>-->
+
+
+    <!--business service config,this id is bean id -->
+    <bean id="simpleDemoFacade" class="${package}.service.facade.SimpleDemoFacadeImpl"/>
+    <dubbo:service version="1.0.0" group="g1" interface="${package}.facade.SimpleDemoFacade"
+                   ref="simpleDemoFacade"/>
+</beans>

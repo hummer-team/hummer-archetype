@@ -11,6 +11,7 @@
     <modules>
         <module>hummer-archetype-spring-boot</module>
         <module>hummer-archetype-netty</module>
+        <module>hummer-archetype-spring-boot-dubbo</module>
     </modules>
 
 <!--    <distributionManagement>-->
