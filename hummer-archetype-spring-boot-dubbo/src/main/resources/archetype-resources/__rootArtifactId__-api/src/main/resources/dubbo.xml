@@ -14,11 +14,11 @@
     <!--dubbo monitor default disabled-->
     <!--<dubbo:monitor protocol="registry" interval="3000"/>-->
 
-    <dubbo:config-center address="${dubbo.config.addr}"/>
-    <dubbo:metadata-report address="${dubbo.config.addr}"/>
+    <dubbo:config-center address="${dubbo.register.addr}"/>
+    <dubbo:metadata-report address="${dubbo.register.addr}"/>
     <!--please settings server port-->
     <dubbo:protocol name="dubbo" port="20001"/>
-    <dubbo:registry address="${dubbo.config.addr}"/>
+    <dubbo:registry address="${dubbo.register.addr}"/>
 
     <!--dubbo:reference service consumers demo-->
     <!--<dubbo:reference version="1.0.0" group="g1"

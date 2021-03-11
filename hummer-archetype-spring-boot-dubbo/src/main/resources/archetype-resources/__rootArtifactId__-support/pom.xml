@@ -47,5 +47,9 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.hummer</groupId>
+            <artifactId>hummer-simple-common-module</artifactId>
+        </dependency>
     </dependencies>
 </project>
