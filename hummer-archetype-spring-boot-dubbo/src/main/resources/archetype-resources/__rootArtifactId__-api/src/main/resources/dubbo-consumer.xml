@@ -16,10 +16,10 @@
     <!--<dubbo:monitor protocol="registry" interval="3000"/>-->
 
     <dubbo:protocol name="dubbo" port="20891"/>
-    <dubbo:registry address="nacos://config-center.service.panli.com:80?namespace=dubbo_config"/>
-    <dubbo:config-center address="nacos://config-center.service.panli.com:80?namespace=dubbo_config"/>
-    <dubbo:metadata-report address="nacos://config-center.service.panli.com:80?namespace=dubbo_config"/>
+    <dubbo:registry address="${dubbo.config.addr}"/>
+    <dubbo:config-center address="${dubbo.config.addr}"/>
+    <dubbo:metadata-report address="${dubbo.config.addr}"/>
 
     <dubbo:reference id="helloService" timeout="1000" retries="1" group="g1" version="1.0.0"
-                     interface="${pacakge}.facade.SimpleDemoFacade"/>
+                     interface="${package}.facade.SimpleDemoFacade"/>
 </beans>
