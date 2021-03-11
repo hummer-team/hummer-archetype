@@ -20,9 +20,11 @@
     <dubbo:protocol name="dubbo" port="20001"/>
     <dubbo:registry address="${dubbo.config.addr}"/>
 
-    <!--dubbo:reference service consumers-->
-    <!--<dubbo:reference id="helloService" timeout="1000" retries="1" group="g1" version="1.0.0"
-                     interface="com.dubbo.template.facade.SimpleDemoFacade" validation="true"/>-->
+    <!--dubbo:reference service consumers demo-->
+    <!--<dubbo:reference version="1.0.0" group="g1"
+                     interface="comm.hummer.simple.common.facade.HelloService"
+                     id="helloService"
+                     validation="true"/>-->
 
     <!--business service config,this id is bean id -->
     <bean id="simpleDemoFacade" class="${package}.service.facade.SimpleDemoFacadeImpl" validation="true"/>
