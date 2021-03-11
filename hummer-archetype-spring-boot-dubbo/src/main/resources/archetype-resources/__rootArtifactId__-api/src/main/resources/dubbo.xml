@@ -27,7 +27,7 @@
                      validation="true"/>-->
 
     <!--business service config,this id is bean id -->
-    <bean id="simpleDemoFacade" class="${package}.service.facade.SimpleDemoFacadeImpl" validation="true"/>
+    <bean id="simpleDemoFacade" class="${package}.service.facade.SimpleDemoFacadeImpl"/>
     <dubbo:service version="1.0.0" group="g1" interface="${package}.facade.SimpleDemoFacade"
                    ref="simpleDemoFacade" validation="true"/>
 </beans>
