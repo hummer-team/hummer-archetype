@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
     <!--this dubbo provide service config,see https://dubbo.apache.org/zh/docs/v2.7/user/references/xml/-->
-    <dubbo:application name="${rootArtifactId}-provider" metadata-type="remote" version="${version}">
+    <dubbo:application name="${rootArtifactId}" metadata-type="remote" version="${version}">
         <dubbo:parameter key="mapping-type" value="metadata"/>
     </dubbo:application>
 
