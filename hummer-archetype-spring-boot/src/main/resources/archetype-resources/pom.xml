@@ -17,29 +17,15 @@
     <description>${rootArtifactId} project for Spring Boot</description>
     <distributionManagement>
         <repository>
-            <id>maven-releases</id>
-            <url>http://10.10.10.250:8081/repository/maven-releases/</url>
+            <id>releases-ac</id>
+            <url>http://ac-repos.ac.com:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>http://10.10.10.250:8081/repository/maven-snapshots/</url>
+            <id>snapshots-ac</id>
+            <url>http://ac-repos.ac.com:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-    <repositories>
-        <repository>
-            <id>ygfmaven</id>
-            <name>maven-public</name>
-            <url>http://10.10.10.250:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+
     <properties>
 
         <java.version>1.8</java.version>
