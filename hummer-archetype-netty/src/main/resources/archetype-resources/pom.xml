@@ -44,6 +44,7 @@
     </repositories>
 
     <properties>
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <io.elves.version>1.0-SNAPSHOT</io.elves.version>
         <business.version>1.0-SNAPSHOT</business.version>
