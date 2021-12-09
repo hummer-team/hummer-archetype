@@ -4,6 +4,7 @@ package ${package}.api.main;
 import com.hummer.core.starter.HummerApplicationStart;
 import com.hummer.rest.webserver.UndertowServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**

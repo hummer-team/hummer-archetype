@@ -15,16 +15,14 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <description>${rootArtifactId} project for Spring Boot</description>
+    <!--microsoft repository-->
     <distributionManagement>
         <repository>
-            <id>releases-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-releases/</url>
+            <id>StoreMobileApp</id>
+            <url>https://pkgs.dev.azure.com/MSCNStore/6affd13e-1c55-473b-8336-431dab8f2e21/_packaging/StoreMobileApp/maven/v1/</url>
         </repository>
-        <snapshotRepository>
-            <id>snapshots-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
     </distributionManagement>
+
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

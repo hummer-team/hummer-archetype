@@ -25,17 +25,22 @@
 <!--        </snapshotRepository>-->
 <!--    </distributionManagement>-->
 
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>releases-ac</id>-->
+<!--            <url>http://ac-repos.ac.com:8081/repository/maven-releases/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>snapshots-ac</id>-->
+<!--            <url>http://ac-repos.ac.com:8081/repository/maven-snapshots/</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
     <distributionManagement>
         <repository>
-            <id>releases-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-releases/</url>
+            <id>StoreMobileApp</id>
+            <url>https://pkgs.dev.azure.com/MSCNStore/6affd13e-1c55-473b-8336-431dab8f2e21/_packaging/StoreMobileApp/maven/v1/</url>
         </repository>
-        <snapshotRepository>
-            <id>snapshots-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
     </distributionManagement>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
