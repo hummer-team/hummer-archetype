@@ -31,10 +31,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <unit-tests.skip>false</unit-tests.skip>
         <integration-tests.skip>false</integration-tests.skip>
-        <unit-tests.skip>false</unit-tests.skip>
         <integration-tests.skip>false</integration-tests.skip>
         <hummer.version>1.0.0-SNAPSHOT</hummer.version>
         <business.version>${version}</business.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
