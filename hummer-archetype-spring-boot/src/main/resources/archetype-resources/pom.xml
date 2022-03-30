@@ -19,7 +19,9 @@
     <distributionManagement>
         <repository>
             <id>StoreMobileApp</id>
-            <url>https://pkgs.dev.azure.com/MSCNStore/6affd13e-1c55-473b-8336-431dab8f2e21/_packaging/StoreMobileApp/maven/v1/</url>
+            <url>
+                https://pkgs.dev.azure.com/MSCNStore/6affd13e-1c55-473b-8336-431dab8f2e21/_packaging/StoreMobileApp/maven/v1/
+            </url>
         </repository>
     </distributionManagement>
 
@@ -35,6 +37,7 @@
         <hummer.version>1.0.0-SNAPSHOT</hummer.version>
         <business.version>${version}</business.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -71,4 +74,50 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>8.41</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <configLocation>checkStyle.xml</configLocation>
+                            <headerLocation>CHECKSTYLE_HEAD</headerLocation>
+                            <propertyExpansion>import.control=importControl.xml</propertyExpansion>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                            <failOnViolation>true</failOnViolation>
+                            <resourceIncludes>
+                                **/*.properties,
+                                **/*.sh,
+                                **/*.bat,
+                                **/*.yml,
+                                **/*.yaml,
+                                **/*.xml
+                            </resourceIncludes>
+                            <excludes>
+                                <!--need replace test moudle path-->
+                                **/cn/com/microsoftstore/thrift/store/api/test/*.java
+                            </excludes>
+                        </configuration>
+                        <id>checkstyle-validation</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

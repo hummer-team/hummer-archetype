@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE import-control PUBLIC
+        "-//Puppy Crawl//DTD Import Control 1.4//EN"
+        "https://checkstyle.org/dtds/import_control_1_4.dtd">
+
+<import-control pkg="cn.com.microsoftstore.thrift.store.api.*" regex="true" strategyOnMismatch="allowed">
+    <allow pkg="*.*"/>
+</import-control>
