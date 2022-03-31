@@ -1,13 +1,12 @@
 package ${package}.service.domain.exception;
 
-
 import com.hummer.common.exceptions.AppException;
 
 /**
  * message sign authentic exception
  *
- * @author bingy
- * @since 1.0.0
+ * @Author edz
+ * @Copyright 20219
  */
 public class BusinessException extends AppException {
     private static final long serialVersionUID = -6610609235989773199L;
@@ -15,7 +14,7 @@ public class BusinessException extends AppException {
     private String message;
 
     public BusinessException(int errorCode, String message) {
-        super(errorCode,message);
+        super(errorCode, message);
         this.errorCode = errorCode;
         this.message = message;
     }

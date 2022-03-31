@@ -6,7 +6,9 @@ import java.util.Date;
 
 /**
  * base po
- * @author edz
+ *
+ * @Author edz
+ * @Copyright 20219
  */
 @Data
 public class BasePo {

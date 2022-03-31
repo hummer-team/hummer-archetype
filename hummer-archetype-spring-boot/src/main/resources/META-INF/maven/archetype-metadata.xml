@@ -145,6 +145,7 @@
 				<include>checkStyle.xml</include>
 				<include>checkStyle.xml</include>
 				<include>importControl.xml</include>
+				<include>CHECKSTYLE_HEAD</include>
 			</includes>
 		</fileSet>
 	</fileSets>

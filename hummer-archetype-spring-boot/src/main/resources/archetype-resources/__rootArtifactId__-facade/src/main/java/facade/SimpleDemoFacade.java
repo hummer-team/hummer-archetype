@@ -1,6 +1,5 @@
 package ${package}.facade;
 
-
 import ${package}.facade.dto.request.SimpleDemoSaveReqDto;
 
 /**
@@ -10,5 +9,6 @@ import ${package}.facade.dto.request.SimpleDemoSaveReqDto;
  **/
 public interface SimpleDemoFacade {
     void save(SimpleDemoSaveReqDto demoDto);
+
     SimpleDemoSaveReqDto querySingleById(String id);
 }

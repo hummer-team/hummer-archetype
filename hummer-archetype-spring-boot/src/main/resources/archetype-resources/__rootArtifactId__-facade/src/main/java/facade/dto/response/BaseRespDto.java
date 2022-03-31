@@ -5,7 +5,10 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @author edz
+ * BaseRespDto
+ *
+ * @Author edz
+ * @Copyright 20219
  */
 @Data
 public class BaseRespDto {

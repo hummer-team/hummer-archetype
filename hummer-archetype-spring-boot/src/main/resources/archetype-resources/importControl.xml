@@ -5,4 +5,5 @@
 
 <import-control pkg="${package}.*" regex="true" strategyOnMismatch="allowed">
     <allow pkg="*.*"/>
+    <allow pkg="com.hummer.*"/>
 </import-control>

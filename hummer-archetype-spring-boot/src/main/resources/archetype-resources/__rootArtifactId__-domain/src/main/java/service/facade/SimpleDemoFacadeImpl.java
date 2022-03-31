@@ -24,13 +24,13 @@ public class SimpleDemoFacadeImpl implements SimpleDemoFacade {
             , transactionManager = "delivery_w_TM"
             , rollbackFor = Exception.class)
     public void save(SimpleDemoSaveReqDto batchDto) {
-        log.debug("this is demo request , info {}",batchDto);
+        log.debug("this is demo request , info {}", batchDto);
         //ignore
     }
 
     @Override
-    public SimpleDemoSaveReqDto querySingleById(String id){
-        SimpleDemoPo po =  simpleDemoDao.querySingleById(id);
+    public SimpleDemoSaveReqDto querySingleById(String id) {
+        SimpleDemoPo po = simpleDemoDao.querySingleById(id);
         return ObjectCopyUtils.copy(po, SimpleDemoSaveReqDto.class);
     }
 }

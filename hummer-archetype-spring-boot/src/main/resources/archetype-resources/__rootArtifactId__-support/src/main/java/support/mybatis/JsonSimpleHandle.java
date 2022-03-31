@@ -15,6 +15,7 @@ import java.sql.SQLException;
  * @Author: lee
  * @since:1.0.0
  * @Date: 2019/7/9 15:15
+ * @Copyright 20219
  **/
 public class JsonSimpleHandle<T> extends BaseTypeHandler<T> {
     private Class<T> aClass;
@@ -30,16 +31,16 @@ public class JsonSimpleHandle<T> extends BaseTypeHandler<T> {
 
     @Override
     public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        return JSON.parseObject(rs.getString(columnName),aClass);
+        return JSON.parseObject(rs.getString(columnName), aClass);
     }
 
     @Override
     public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        return JSON.parseObject(rs.getString(columnIndex),aClass);
+        return JSON.parseObject(rs.getString(columnIndex), aClass);
     }
 
     @Override
     public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return JSON.parseObject(cs.getString(columnIndex),aClass);
+        return JSON.parseObject(cs.getString(columnIndex), aClass);
     }
 }

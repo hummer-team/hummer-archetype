@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+
+import com.hummer.common.security.Md5;
 
 /**
  * Delivery Line enter
@@ -45,8 +46,8 @@ public class SimpleController {
     @ApiOperation(value = "this is query demo")
     public ResourceResponse save(@RequestParam("id")
                                  @NotEmpty(message = "id can't null")
-                                 @Length(max = 100, message = "max length 100 char.")
-                                 String id) {
-        return ResourceResponse.ok(simpleDemoFacade.querySingleById(id));
+                                 @Length(max = 100, message = "max length 100 char.") String id) {
+        String ids = Md5.encryptMd5(id);
+        return ResourceResponse.ok(simpleDemoFacade.querySingleById(ids));
     }
 }

@@ -105,9 +105,13 @@
                                 **/*.yaml,
                                 **/*.xml
                             </resourceIncludes>
+                            <resourceExcludes>
+                                **/log*.xml,
+                                **/log*-*.xml
+                            </resourceExcludes>
                             <excludes>
                                 <!--need replace test moudle path-->
-                                **/cn/com/microsoftstore/thrift/store/api/test/*.java
+                                **/*Test.java
                             </excludes>
                         </configuration>
                         <id>checkstyle-validation</id>

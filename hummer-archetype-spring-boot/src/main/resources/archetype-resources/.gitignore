@@ -10,4 +10,7 @@ gen
 target
 target/*
 .flattened-pom.xml
+log
+logs
+*.log
 

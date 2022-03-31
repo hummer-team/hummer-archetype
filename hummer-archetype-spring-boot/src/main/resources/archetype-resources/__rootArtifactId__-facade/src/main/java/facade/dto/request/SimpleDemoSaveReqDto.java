@@ -8,7 +8,10 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * @author edz
+ * SimpleDemoSaveReqDto
+ *
+ * @Author edz
+ * @Copyright 20219
  */
 @Data
 public class SimpleDemoSaveReqDto {
@@ -18,7 +21,7 @@ public class SimpleDemoSaveReqDto {
 
     @NotEmpty(message = "third Party Delivery code value can't empty.")
     @ApiModelProperty(required = true)
-    @Length(max = 100,message = "max length is 100 char")
+    @Length(max = 100, message = "max length is 100 char")
     private String deliveryCompanyCode;
 
     @NotEmpty(message = "batch id can't empty.")

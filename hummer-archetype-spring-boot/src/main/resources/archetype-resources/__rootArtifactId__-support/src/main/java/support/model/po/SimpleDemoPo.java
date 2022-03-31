@@ -2,10 +2,11 @@ package ${package}.support.model.po;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
- * @author edz
+ * base po
+ *
+ * @Author edz
+ * @Copyright 20219
  */
 @Data
 public class SimpleDemoPo extends BasePo {
