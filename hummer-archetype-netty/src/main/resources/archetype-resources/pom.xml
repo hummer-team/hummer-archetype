@@ -17,31 +17,26 @@
     <description>${rootArtifactId} project for netty</description>
     <url>https://github.com/hummer-team/elves</url>
 
+    <!--repository-->
     <distributionManagement>
         <repository>
-            <id>releases-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-releases/</url>
+            <id>${repository.id}</id>
+            <url>${repository.url}</url>
         </repository>
-        <snapshotRepository>
-            <id>snapshots-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
     </distributionManagement>
     <repositories>
         <repository>
-            <id>ygfmaven</id>
-            <name>maven-public</name>
-            <url>http://10.10.10.250:8081/repository/maven-public/</url>
+            <id>${repository.id}</id>
+            <url>${repository.url}</url>
             <releases>
                 <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
     </repositories>
+
 
     <properties>
         <java.version>11</java.version>

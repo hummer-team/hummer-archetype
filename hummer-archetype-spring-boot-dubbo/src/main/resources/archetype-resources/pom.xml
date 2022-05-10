@@ -15,16 +15,26 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <description>${rootArtifactId} project for Spring Boot</description>
+    <!--repository-->
     <distributionManagement>
         <repository>
-            <id>releases-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-releases/</url>
+            <id>${repository.id}</id>
+            <url>${repository.url}</url>
         </repository>
-        <snapshotRepository>
-            <id>snapshots-ac</id>
-            <url>http://ac-repos.ac.com:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
     </distributionManagement>
+    <repositories>
+        <repository>
+            <id>${repository.id}</id>
+            <url>${repository.url}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
 
     <properties>
 
