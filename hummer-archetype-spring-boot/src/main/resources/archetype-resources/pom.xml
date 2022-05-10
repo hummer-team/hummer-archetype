@@ -14,16 +14,27 @@
         <groupId>com.hummer</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <description>${rootArtifactId} project for Spring Boot</description>
-    <!--microsoft repository-->
+    <description>${rootArtifactId} project for Spring Boot and hummer framework</description>
+    <url>https://github.com/hummer-team/hummer-framework.git</url>
+    <!--repository-->
     <distributionManagement>
         <repository>
-            <id>StoreMobileApp</id>
-            <url>
-                https://pkgs.dev.azure.com/MSCNStore/6affd13e-1c55-473b-8336-431dab8f2e21/_packaging/StoreMobileApp/maven/v1/
-            </url>
+            <id>${repository.id}</id>
+            <url>${repository.url}</url>
         </repository>
     </distributionManagement>
+    <repositories>
+        <repository>
+            <id>${repository.id}</id>
+            <url>${repository.url}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <properties>
         <java.version>11</java.version>
