@@ -112,12 +112,10 @@
                                 **/*.sh,
                                 **/*.bat,
                                 **/*.yml,
-                                **/*.yaml,
-                                **/*.xml
+                                **/*.yaml
                             </resourceIncludes>
                             <resourceExcludes>
-                                **/log*.xml,
-                                **/log*-*.xml
+                                *.xml
                             </resourceExcludes>
                             <excludes>
                                 <!--need replace test moudle path-->

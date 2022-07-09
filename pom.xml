@@ -14,33 +14,6 @@
         <module>hummer-archetype-spring-boot-dubbo</module>
     </modules>
 
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>releases-local</id>-->
-<!--            <url>http://localhost:8081/nexus/content/repositories/releases</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>snapshots-local</id>-->
-<!--            <url>http://localhost:8081/nexus/content/repositories/snapshots</url>-->
-<!--        </snapshotRepository>-->
-<!--    </distributionManagement>-->
-
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>releases-ac</id>-->
-<!--            <url>http://ac-repos.ac.com:8081/repository/maven-releases/</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>snapshots-ac</id>-->
-<!--            <url>http://ac-repos.ac.com:8081/repository/maven-snapshots/</url>-->
-<!--        </snapshotRepository>-->
-<!--    </distributionManagement>-->
-    <distributionManagement>
-        <repository>
-            <id>StoreMobileApp</id>
-            <url>https://pkgs.dev.azure.com/MSCNStore/6affd13e-1c55-473b-8336-431dab8f2e21/_packaging/StoreMobileApp/maven/v1/</url>
-        </repository>
-    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -50,4 +23,13 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
