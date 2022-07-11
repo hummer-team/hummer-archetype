@@ -143,7 +143,6 @@
 				<include>.gitignore</include>
 				<include>README.md</include>
 				<include>checkStyle.xml</include>
-				<include>checkStyle.xml</include>
 				<include>importControl.xml</include>
 				<include>CHECKSTYLE_HEAD</include>
 			</includes>
