@@ -138,7 +138,7 @@
         <module name="MethodName"/>
     </module>
     <module name="LineLength">
-        <property name="max" value="125"/>
+        <property name="max" value="130"/>
         <property name="fileExtensions" value="java"/>
         <property name="ignorePattern"
                   value="^package.*|^import.*|(resources/*.*)|a href|href|http://|https://|ftp://"/>
