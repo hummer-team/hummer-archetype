@@ -99,6 +99,7 @@
 		<Logger name="springfox.documentation" level="error" />
 		<Logger name="com.zaxxer.hikari" level="info"/>
 		<Root level="debug">
+			<appender-ref ref="Console" />
 			<appender-ref ref="LogstashFile" />
 			<appender-ref ref="RollingErrorFile" />
 		</Root>

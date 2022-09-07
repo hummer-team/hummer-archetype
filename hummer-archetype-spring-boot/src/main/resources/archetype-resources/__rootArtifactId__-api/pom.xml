@@ -46,6 +46,45 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <profileActive>local</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profileActive>dev</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <profileActive>uat</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prd</id>
+            <properties>
+                <profileActive>prd</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
     <build>
         <resources>
             <resource>
@@ -57,7 +96,6 @@
                 </includes>
             </resource>
         </resources>
-
         <!--<finalName>${project.artifact.name}-${project.version}-${build.number}</finalName>-->
         <plugins>
             <plugin>
@@ -83,6 +121,7 @@
                         <artifactId>non-exists</artifactId>
                         </include>
                     </includes>-->
+                    <outputDirectory>../target</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -103,15 +142,36 @@
                                 <resource>
                                     <directory>src/main/resources</directory>
                                     <includes>
-                                        <include>*.properties</include>
-                                        <include>*.yml</include>
-                                        <include>*/*.properties</include>
-                                        <include>*/*.properties</include>
-                                        <include>*.xml</include>
+                                        <include>*-${profileActive}.*</include>
+                                        <include>*/*-${profileActive}.*</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <includes>
+                                        <include>application.properties</include>
                                     </includes>
                                 </resource>
                             </resources>
-                            <outputDirectory>${project.build.directory}/resources</outputDirectory>
+                            <outputDirectory>../target/resources</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy file="src/bin/${profileActive}/deploy.sh" tofile="../target/deploy.sh"/>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
