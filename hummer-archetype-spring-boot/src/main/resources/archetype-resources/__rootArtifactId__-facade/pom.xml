@@ -12,11 +12,5 @@
 
     <artifactId>${artifactId}</artifactId>
     <version>${version}</version>
-
-    <dependencies>
-        <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>${rootArtifactId}-support</artifactId>
-        </dependency>
-    </dependencies>
+    <!--dependencies node define-->
 </project>
