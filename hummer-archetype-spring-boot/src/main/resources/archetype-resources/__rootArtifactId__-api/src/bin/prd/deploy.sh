@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --login
 
 #
 # MIT License
@@ -25,22 +25,29 @@
 #
 #
 
-# 修改APP_NAME为云效上的应用名
 APP_NAME=${rootArtifactId}
 
 PROG_NAME=$0
 ACTION=$1
-APP_START_TIMEOUT=45    # 等待应用启动的时间
-APP_PORT=20000          # 应用端口
-HEALTH_CHECK_URL=http://127.0.0.1:${APP_PORT}/warmup  # 应用健康检查URL
-#HEALTH_CHECK_FILE_DIR=/usr/app/${APP_NAME}/status   # 脚本会在这个目录下生成nginx-status文件
-APP_HOME=/usr/app/${APP_NAME} # 从package.tgz中解压出来的jar包放到这个目录下
-JAR_NAME=${APP_NAME}-api-1.0-SNAPSHOT.jar # jar包的名字
+APP_START_TIMEOUT=45
+APP_PORT=20130
+HEALTH_CHECK_URL=http://127.0.0.1:${APP_PORT}/warmup
+APP_HOME=/usr/app/${APP_NAME}
+JAR_NAME=door-god-api-1.0-SNAPSHOT.jar
 JAR_PATH=${APP_HOME}/target/${JAR_NAME}
 APP_LOG_DIR=/usr/app/logs/${APP_NAME}
-JAVA_OUT=${APP_LOG_DIR}/start-${APP_NAME}.log #应用的启动日志
+JAVA_OUT=${APP_LOG_DIR}/start-${APP_NAME}.log
 RESOURCES_PATH=${APP_HOME}/target/resources/
-#创建出相关目录
+LIVENESS_DELAY_SEC=60
+LIVENESS_TIMEOUT_SEC=5
+LIVENESS_FAIL=3
+LIVENESS_ENV=prd
+USR_DEPLOY_FILE=/usr/app/deploy.sh
+#Trace 配置
+TRACE_REPORT_TOKEN=iol3nshb81@464037b5b8359d5_iol3nshb81@53df7ad2afe8301
+TRACE_REPORT_ADDRESS=http://tracing-analysis-dc-sz-internal.aliyuncs.com:8090
+TRACE_REPORT_AGENT_FILE=/usr/app/opentelemetry-javaagent.jar
+TRACE_REPORT_LOG_FILE=/usr/app/logs/${APP_NAME}/opentelemetry.log
 
 if [ ! -d "${APP_HOME}" ]; then
   mkdir -p ${APP_HOME}
@@ -51,18 +58,40 @@ if [ ! -d "${APP_LOG_DIR}" ]; then
 fi
 
 #
-JAVA_OPT="${JAVA_OPT}  -server -Xms1024m -Xmx1024m -Xmn512m"
-JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${APP_LOG_DIR}/java_heapdump.hprof"
-JAVA_OPT="${JAVA_OPT} -Dnacos.standalone=true"
-JAVA_OPT="${JAVA_OPT} -Xlog:gc*:file=${APP_LOG_DIR}/gc.log:time,tags:filecount=10,filesize=102400"
+JAVA_OPT="${JAVA_OPT} -server -Xms5000m -Xmx5000m -Xmn1600m"
+JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${APP_LOG_DIR}/ -XX:ErrorFile=${APP_LOG_DIR}/jvm_error_%p.log"
+JAVA_OPT="${JAVA_OPT} -Xlog:gc*:file=${APP_LOG_DIR}/gc.log:time,tags:filecount=10,filesize=30M"
 JAVA_OPT="${JAVA_OPT} -Dserver.max-http-header-size=524288"
-#JAVA_OPT="${JAVA_OPT} -Dspring.config.additional-location=${RESOURCES_PATH}"
-#
-JAVA_AFTER_OPT=" --spring.config.location=${RESOURCES_PATH}"
+JAVA_OPT="${JAVA_OPT} -Dreactor.netty.pool.leasingStrategy=lifo"
+
+if [ -f "${TRACE_REPORT_AGENT_FILE}" ]; then
+  JAVA_OPT="${JAVA_OPT} -javaagent:${TRACE_REPORT_AGENT_FILE}"
+  JAVA_OPT="${JAVA_OPT} -Dotel.traces.sampler=parentbased_traceidratio"
+  JAVA_OPT="${JAVA_OPT} -Dotel.traces.sampler.arg=0.3"
+  JAVA_OPT="${JAVA_OPT} -Dotel.javaagent.exclude-classes=com.alibaba.nacos.*"
+  JAVA_OPT="${JAVA_OPT} -Dotel.resource.attributes=service.name=${LIVENESS_ENV}-${APP_NAME}"
+  JAVA_OPT="${JAVA_OPT} -Dotel.exporter.otlp.headers=Authentication=${TRACE_REPORT_TOKEN}"
+  JAVA_OPT="${JAVA_OPT} -Dotel.exporter.otlp.endpoint=${TRACE_REPORT_ADDRESS}"
+  JAVA_OPT="${JAVA_OPT} -Dio.opentelemetry.javaagent.slf4j.simpleLogger.logFile=${TRACE_REPORT_LOG_FILE}"
+  JAVA_OPT="${JAVA_OPT} -Dio.opentelemetry.javaagent.slf4j.simpleLogger.defaultLogLevel=error"
+  JAVA_OPT="${JAVA_OPT} -Dio.opentelemetry.javaagent.slf4j.simpleLogger.dateTimeFormat=YYYY-MM-dd_HH:mm:ss.SSS"
+  JAVA_OPT="${JAVA_OPT} -Dio.opentelemetry.javaagent.slf4j.simpleLogger.showDateTime=true"
+  JAVA_OPT="${JAVA_OPT} -Dio.opentelemetry.javaagent.slf4j.simpleLogger.showShortLogName=true"
+  JAVA_OPT="${JAVA_OPT} -Dio.opentelemetry.javaagent.slf4j.simpleLogger.levelInBrackets=true"
+fi
+
+JAVA_AFTER_OPT="${JAVA_AFTER_OPT} --spring.config.location=${RESOURCES_PATH}"
+
+if [ ! -f "${USR_DEPLOY_FILE}" ]; then
+  ln -s ${APP_HOME}/target/deploy.sh ${USR_DEPLOY_FILE}
+fi
 
 
-JAVA=${JAVA_HOME}/bin/java
-echo "JAVA_HOME is ${JAVA}"
+if [ -z "${JAVA_HOME}" ]; then
+  JAVA=/usr/local/jdk-11.0.17/bin/java
+else
+  JAVA=${JAVA_HOME}/bin/java
+fi
 
 usage() {
     echo "Usage: $PROG_NAME {start|stop|restart}"
@@ -95,6 +124,7 @@ health_check() {
         done
     echo "check ${HEALTH_CHECK_URL} success, application start ok cost `expr $exptime` s"
 }
+
 start_application() {
     echo "starting java process:"
     echo "${JAVA} $JAVA_OPT -jar ${JAR_PATH} ${JAVA_AFTER_OPT} > ${JAVA_OUT} 2>&1 &"
@@ -136,15 +166,52 @@ stop_application() {
    fi
    echo -e "\r${JAR_NAME} stop success"
 }
+
 start() {
     JAVA_OPT="${JAVA_OPT} -Dspring.profiles.active=${1}"
     JAVA_OPT="${JAVA_OPT} -Dlog4j.configurationFile=file:${RESOURCES_PATH}log4j2-${1}.xml"
+    JAVA_AFTER_OPT="${JAVA_AFTER_OPT} --logging.config=file:${RESOURCES_PATH}log4j2-${1}.xml"
     start_application
     health_check
 }
+
 stop() {
     stop_application
 }
+
+logs() {
+   ip=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:" | head -n 1`
+   # shellcheck disable=SC2005
+   echo "`date '+%Y-%m-%d %H:%M:%S.%N'` ERROR [$ip] [0] [shell-monitor-0] shell-monitor             :${JAR_NAME} liveness check fail will start" >> ${APP_LOG_DIR}/logstash.log
+}
+
+liveness() {
+   appjavapid=`ps -ef | grep java | grep ${JAR_NAME} | grep -v grep |grep -v 'deploy.sh'| awk '{print$2}'`
+   if [ ! $appjavapid ]; then
+      echo -e "\rno java process ${JAR_NAME}"
+      logs
+      start $LIVENESS_ENV
+      exit 0
+   fi
+
+   uptime=`ps -p $appjavapid -o etimes | awk '{print$1}' | tail -n 1`
+   if [ $uptime -lt ${LIVENESS_DELAY_SEC} ]; then
+      exit 0
+   fi
+
+   status_code=`/usr/bin/curl -L -o /dev/null --retry ${LIVENESS_FAIL} --connect-timeout ${LIVENESS_TIMEOUT_SEC} -s -w %{http_code} ${HEALTH_CHECK_URL}`
+   if [ $status_code = 200 ]; then
+
+      exit 0
+   else
+      logs
+      # process deadlocked process
+      kill -9 $appjavapid
+      start $LIVENESS_ENV
+      exit 0
+   fi
+}
+
 case "$1" in
     start)
         start $2
@@ -157,9 +224,15 @@ case "$1" in
         start $2
     ;;
     check)
+        health
+    ;;
+    liveness)
+        liveness
+    ;;
+   readiness)
         health_check
     ;;
     *)
-        echo "start dev|uat|prd or stop or restart dev|uat|prd"
+        echo "start dev|uat|prd or stop or restart dev|uat|prd or liveness or readiness"
     ;;
 esac

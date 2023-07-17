@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --login
 
 #
 # MIT License
@@ -25,22 +25,25 @@
 #
 #
 
-# 修改APP_NAME为云效上的应用名
 APP_NAME=${rootArtifactId}
 
 PROG_NAME=$0
 ACTION=$1
-APP_START_TIMEOUT=45    # 等待应用启动的时间
-APP_PORT=20000          # 应用端口
-HEALTH_CHECK_URL=http://127.0.0.1:${APP_PORT}/warmup  # 应用健康检查URL
-#HEALTH_CHECK_FILE_DIR=/usr/app/${APP_NAME}/status   # 脚本会在这个目录下生成nginx-status文件
-APP_HOME=/usr/app/${APP_NAME} # 从package.tgz中解压出来的jar包放到这个目录下
-JAR_NAME=${APP_NAME}-api-1.0-SNAPSHOT.jar # jar包的名字
+APP_START_TIMEOUT=45
+APP_PORT=20130
+HEALTH_CHECK_URL=http://127.0.0.1:${APP_PORT}/warmup
+APP_HOME=/usr/app/${APP_NAME}
+JAR_NAME=${APP_NAME}-api-1.0-SNAPSHOT.jar
 JAR_PATH=${APP_HOME}/target/${JAR_NAME}
 APP_LOG_DIR=/usr/app/logs/${APP_NAME}
-JAVA_OUT=${APP_LOG_DIR}/start-${APP_NAME}.log #应用的启动日志
+JAVA_OUT=${APP_LOG_DIR}/start-${APP_NAME}.log
 RESOURCES_PATH=${APP_HOME}/target/resources/
-#创建出相关目录
+#
+LIVENESS_DELAY_SEC=60
+LIVENESS_TIMEOUT_SEC=5
+LIVENESS_FAIL=3
+RETRY_DELAY=5
+LIVENESS_ENV=uat
 
 if [ ! -d "${APP_HOME}" ]; then
   mkdir -p ${APP_HOME}
@@ -51,18 +54,22 @@ if [ ! -d "${APP_LOG_DIR}" ]; then
 fi
 
 #
-JAVA_OPT="${JAVA_OPT} -server -Xms512m -Xmx512m -Xmn200m"
-JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${APP_LOG_DIR}/java_heapdump.hprof"
-JAVA_OPT="${JAVA_OPT} -Dnacos.standalone=true"
-JAVA_OPT="${JAVA_OPT} -Xlog:gc*:file=${APP_LOG_DIR}/gc.log:time,tags:filecount=10,filesize=102400"
+JAVA_OPT="${JAVA_OPT} -verbose:class"
+JAVA_OPT="${JAVA_OPT} -server -Xms512m -Xmx512m -Xmn300m"
+JAVA_OPT="${JAVA_OPT} -XX:+UnlockDiagnosticVMOptions -XX:MaxMetaspaceSize=180M -XX:MaxDirectMemorySize=180M"
+JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${APP_LOG_DIR}/ -XX:ErrorFile=${APP_LOG_DIR}/jvm_error_%p.log"
+JAVA_OPT="${JAVA_OPT} -Xlog:gc*:file=${APP_LOG_DIR}/gc.log:time,tags:filecount=10,filesize=10M"
 JAVA_OPT="${JAVA_OPT} -Dserver.max-http-header-size=524288"
 #JAVA_OPT="${JAVA_OPT} -Dspring.config.additional-location=${RESOURCES_PATH}"
 #
 JAVA_AFTER_OPT=" --spring.config.location=${RESOURCES_PATH}"
 
 
-JAVA=${JAVA_HOME}/bin/java
-echo "JAVA_HOME is ${JAVA}"
+if [ -z "${JAVA_HOME}" ]; then
+  JAVA=/usr/local/jdk-11.0.17/bin/java
+else
+  JAVA=${JAVA_HOME}/bin/java
+fi
 
 usage() {
     echo "Usage: $PROG_NAME {start|stop|restart}"
@@ -136,15 +143,51 @@ stop_application() {
    fi
    echo -e "\r${JAR_NAME} stop success"
 }
+
 start() {
     JAVA_OPT="${JAVA_OPT} -Dspring.profiles.active=${1}"
     JAVA_OPT="${JAVA_OPT} -Dlog4j.configurationFile=file:${RESOURCES_PATH}log4j2-${1}.xml"
     start_application
     health_check
 }
+
 stop() {
     stop_application
 }
+
+logs() {
+   ip=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:" | head -n 1`
+   # shellcheck disable=SC2005
+   echo "`date '+%Y-%m-%d %H:%M:%S.%N'` ERROR [$ip] [0] [shell-monitor-0] shell-monitor             :${JAR_NAME} liveness check fail will start" >> ${APP_LOG_DIR}/logstash.log
+}
+
+liveness() {
+   appjavapid=`ps -ef | grep java | grep ${JAR_NAME} | grep -v grep |grep -v 'deploy.sh'| awk '{print$2}'`
+   if [ ! $appjavapid ]; then
+      echo -e "\rno java process ${JAR_NAME}"
+      logs
+      start $LIVENESS_ENV
+      exit 0
+   fi
+
+   uptime=`ps -p $appjavapid -o etimes | awk '{print$1}' | tail -n 1`
+   if [ $uptime -lt ${LIVENESS_DELAY_SEC} ]; then
+      exit 0
+   fi
+
+   status_code=`/usr/bin/curl -L -o /dev/null --retry ${LIVENESS_FAIL} --connect-timeout ${LIVENESS_TIMEOUT_SEC} -s -w %{http_code} ${HEALTH_CHECK_URL}`
+   if [ $status_code = 200 ]; then
+
+      exit 0
+   else
+      logs
+      # process deadlocked process
+      kill -9 $appjavapid
+      start $LIVENESS_ENV
+      exit 0
+   fi
+}
+
 case "$1" in
     start)
         start $2
@@ -157,9 +200,15 @@ case "$1" in
         start $2
     ;;
     check)
+        health
+    ;;
+    liveness)
+        liveness
+    ;;
+    readiness)
         health_check
     ;;
     *)
-        echo "start dev|uat|prd or stop or restart dev|uat|prd"
+        echo "start dev|uat|prd or stop or restart dev|uat|prd or liveness or readiness"
     ;;
 esac
