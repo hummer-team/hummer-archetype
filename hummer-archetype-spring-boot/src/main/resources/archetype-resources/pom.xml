@@ -11,7 +11,7 @@
     <parent>
         <artifactId>hummer-boot-starter</artifactId>
         <groupId>com.hummer</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <description>${rootArtifactId} project for Spring Boot and hummer framework</description>
     <url>https://github.com/hummer-team/hummer-framework.git</url>
