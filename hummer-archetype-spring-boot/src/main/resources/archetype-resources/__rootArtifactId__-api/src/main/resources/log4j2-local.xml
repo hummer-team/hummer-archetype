@@ -27,7 +27,7 @@
 								 filePattern="${LOG_PATH}/logs/${project_name}/%d{yyyy-MM-dd}_logstash.log">
 			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
-				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
 			</Policies>
 			<Filters>
@@ -41,7 +41,7 @@
 								 fileName="${LOG_PATH}/logs/${project_name}/info.log" filePattern="${LOG_PATH}/logs/${project_name}/info_%d{yyyy-MM-dd}.log">
 			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
-				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
 			</Policies>
 			<Filters>
@@ -57,7 +57,7 @@
 								 fileName="${LOG_PATH}/logs/${project_name}/error.log" filePattern="${LOG_PATH}/logs/${project_name}/error_%d{yyyy-MM-dd}.log">
 			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
-				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
 			</Policies>
 			<Filters>
@@ -72,7 +72,7 @@
 								 filePattern="${LOG_PATH}/logs/${project_name}/debug_%d{yyyy-MM-dd}.log">
 			<PatternLayout charset="utf-8" pattern="${FILE_LOG_PATTERN}" />
 			<Policies>
-				<TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
 				<SizeBasedTriggeringPolicy size="${splitSize}"/>
 			</Policies>
 			<Filters>

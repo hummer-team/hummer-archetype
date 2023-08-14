@@ -43,6 +43,12 @@
         <dependency>
             <groupId>com.hummer</groupId>
             <artifactId>hummer-rest</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.hummer</groupId>
+                    <artifactId>hummer-swagger-plugin</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -55,6 +61,12 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.hummer</groupId>
+                    <artifactId>hummer-swagger-plugin</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>dev</id>
@@ -64,6 +76,12 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.hummer</groupId>
+                    <artifactId>hummer-swagger-plugin</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>uat</id>
@@ -73,6 +91,12 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.hummer</groupId>
+                    <artifactId>hummer-swagger-plugin</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>prd</id>
