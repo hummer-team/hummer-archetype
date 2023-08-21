@@ -58,11 +58,13 @@ if [ ! -d "${APP_LOG_DIR}" ]; then
 fi
 
 #
+JAVA_OPT="${JAVA_OPT} --add-opens java.base/java.lang=ALL-UNNAMED"
 JAVA_OPT="${JAVA_OPT} -server -Xms5000m -Xmx5000m -Xmn1600m"
 JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${APP_LOG_DIR}/ -XX:ErrorFile=${APP_LOG_DIR}/jvm_error_%p.log"
 JAVA_OPT="${JAVA_OPT} -Xlog:gc*:file=${APP_LOG_DIR}/gc.log:time,tags:filecount=10,filesize=30M"
 JAVA_OPT="${JAVA_OPT} -Dserver.max-http-header-size=524288"
 JAVA_OPT="${JAVA_OPT} -Dreactor.netty.pool.leasingStrategy=lifo"
+JAVA_OPT="${JAVA_OPT} -DLOG_DIR=${APP_LOG_DIR}"
 
 if [ -f "${TRACE_REPORT_AGENT_FILE}" ]; then
   JAVA_OPT="${JAVA_OPT} -javaagent:${TRACE_REPORT_AGENT_FILE}"

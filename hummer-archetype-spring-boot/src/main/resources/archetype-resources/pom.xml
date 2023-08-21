@@ -11,13 +11,12 @@
     <parent>
         <artifactId>hummer-boot-starter</artifactId>
         <groupId>com.hummer</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
     <description>${rootArtifactId} project for Spring Boot and hummer framework</description>
     <url>https://github.com/hummer-team/hummer-framework.git</url>
 
     <properties>
-        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -25,7 +24,7 @@
         <unit-tests.skip>false</unit-tests.skip>
         <integration-tests.skip>false</integration-tests.skip>
         <integration-tests.skip>false</integration-tests.skip>
-        <hummer.version>1.0.0-SNAPSHOT</hummer.version>
+        <hummer.version>1.0.2-SNAPSHOT</hummer.version>
         <business.version>${version}</business.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>

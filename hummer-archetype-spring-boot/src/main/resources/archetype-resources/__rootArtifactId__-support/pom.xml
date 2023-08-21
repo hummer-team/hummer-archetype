@@ -18,10 +18,6 @@
             <artifactId>hummer-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hummer</groupId>
-            <artifactId>hummer-rest</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
         </dependency>

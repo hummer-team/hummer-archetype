@@ -54,12 +54,14 @@ if [ ! -d "${APP_LOG_DIR}" ]; then
 fi
 
 #
+JAVA_OPT="${JAVA_OPT} --add-opens java.base/java.lang=ALL-UNNAMED"
 JAVA_OPT="${JAVA_OPT} -verbose:class"
 JAVA_OPT="${JAVA_OPT} -server -Xms512m -Xmx512m -Xmn300m"
 JAVA_OPT="${JAVA_OPT} -XX:+UnlockDiagnosticVMOptions -XX:MaxMetaspaceSize=180M -XX:MaxDirectMemorySize=180M"
 JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${APP_LOG_DIR}/ -XX:ErrorFile=${APP_LOG_DIR}/jvm_error_%p.log"
 JAVA_OPT="${JAVA_OPT} -Xlog:gc*:file=${APP_LOG_DIR}/gc.log:time,tags:filecount=10,filesize=10M"
 JAVA_OPT="${JAVA_OPT} -Dserver.max-http-header-size=524288"
+JAVA_OPT="${JAVA_OPT} -DLOG_DIR=${APP_LOG_DIR}"
 #JAVA_OPT="${JAVA_OPT} -Dspring.config.additional-location=${RESOURCES_PATH}"
 #
 JAVA_AFTER_OPT=" --spring.config.location=${RESOURCES_PATH}"
