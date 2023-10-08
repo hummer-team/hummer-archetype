@@ -2,7 +2,7 @@
 <!-- status=debug 可以查看log4j的装配过程 -->
 <configuration status="OFF" monitorInterval="1800" packages="org.apache.logging.log4j.core">
 	<properties>
-		<property name="LOG_PATH">${sys:LOG_DIR}</property>
+		<property name="LOG_PATH">${log.dir}</property>
 		<property name="project_name">${rootArtifactId}</property>
 		<!--<property name="pattern">[%level] [%date{ISO8601}] [%logger] [%thread] [] [%X{requestId}] [%X{serverIp}] %msg%n</property>-->
 		<Property name="splitSize">100 MB</Property>

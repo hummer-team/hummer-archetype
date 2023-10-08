@@ -28,6 +28,8 @@
         <business.version>${version}</business.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <!--sys:LOG_DIR-->
+        <log.dir>/usr/app/logs</log.dir>
     </properties>
     <dependencyManagement>
         <dependencies>
