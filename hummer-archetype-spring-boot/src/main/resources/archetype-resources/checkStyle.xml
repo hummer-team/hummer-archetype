@@ -25,14 +25,14 @@
         <property name="format" value=".printStackTrace"/>
         <property name="message" value="Prohibit invoking e.printStackTrace in source code !"/>
     </module>
-
+    <!--
     <module name="RegexpSingleline">
         <property name="format" value="^\s*\*\s*@author"/>
         <property name="minimum" value="0"/>
         <property name="maximum" value="0"/>
         <property name="message" value="ASF project doesn't allow @author copyright."/>
     </module>
-
+    -->
     <!--
     <module name="RegexpSingleline">
         <property name="format"
